@@ -12,36 +12,48 @@ This is the core part of FFmpeg.wasm where we transpile C/C++ code of FFmpeg to 
 
 If you have any issues for this repository, please put it here: https://github.com/ffmpegwasm/ffmpeg.wasm/issues
 
-## Setup
+## 安装
 
 ```
 $ git clone https://github.com/ffmpegwasm/ffmpeg.wasm-core
 $ git submodule update --init --recursive
 ```
 
-## Build
+## 构建
 
-1. Use docker (easy way)
+1. 使用docker (简单方法)
 
-Install latest docker and run `build-with-docker.sh`.
+安装最新的docker，然后执行 `build-with-docker.sh`.
+
+但发现会出现不少的问题
 
 ```
 $ bash build-with-docker.sh
 ```
 
-2. Install emsdk (unstable way)
+2. 安装emsdk
 
-Setup the emsdk from [HERE](https://emscripten.org/docs/getting_started/downloads.html) and run `build.sh`.
+执行
+```
+git clone https://github.com/emscripten-core/emsdk.git
+cd emsdk
+./emsdk install 2.0.8
+./emsdk activate 2.0.8
+```
+
+3. 安装cmake
+
+然后执行 `build.sh`.
 
 ```
 $ bash build.sh
 ```
 
-If nothing goes wrong, you can find JavaScript files in `wasm/dist`.
+如果一切顺利, 你可以看到文件 `wasm/dist`.
 
-## Test
+## 测试
 
-Once the build completes, you can test with following scripts:
+如果一切都构建完毕, 你可以执行下面的命令来测试:
 
 ```
 $ cd wasm
@@ -49,16 +61,16 @@ $ npm install
 $ npm test
 ```
 
-## Configuration
+## 配置
 
-#### Base
+#### 基础
 
 | Library/Tool Name | Version | Remark |
 | ----------------- | ------- | ------ |
 | Emscripten | 2.0.8 | |
 | FFmpeg | 4.3.1 | |
 
-#### Video
+#### 视频
 
 | Library/Tool Name | Version | Remark |
 | ----------------- | ------- | ------ |
@@ -68,7 +80,7 @@ $ npm test
 | theora | 1.1.1 | ogv format |
 | aom | 1.0.0 | mkv format, extremely slow (takes over 120s for 1s video), not recommended to use |
 
-#### Audio
+#### 音频
 
 | Library/Tool Name | Version | Remark |
 | ----------------- | ------- | ------ |
@@ -79,13 +91,13 @@ $ npm test
 | vorbis | 1.3.6 | ogg format |
 | opus | 1.3.1 | opus format |
 
-#### Image
+#### 图片
 
 | Library/Tool Name | Version | Remark |
 | ----------------- | ------- | ------ |
 | libwebp | 1.1.0 | webp format |
 
-#### Others
+#### 其他
 
 | Library/Tool Name | Version | Remark |
 | ----------------- | ------- | ------ |
