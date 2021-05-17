@@ -357,6 +357,7 @@ static void ffprobe_cleanup(int ret)
 #if HAVE_THREADS
     pthread_mutex_destroy(&log_mutex);
 #endif
+    printf("FFMPEG_END\n");
 }
 
 struct unit_value {
@@ -2905,7 +2906,7 @@ static int open_input_file(InputFile *ifile, const char *filename,
     ifile->streams = av_mallocz_array(fmt_ctx->nb_streams,
                                       sizeof(*ifile->streams));
     if (!ifile->streams)
-        exit(1);
+        exit_program(1);
     ifile->nb_streams = fmt_ctx->nb_streams;
 
     /* bind a decoder to each input stream */
@@ -2936,11 +2937,11 @@ static int open_input_file(InputFile *ifile, const char *filename,
 
             ist->dec_ctx = avcodec_alloc_context3(codec);
             if (!ist->dec_ctx)
-                exit(1);
+                exit_program(1);
 
             err = avcodec_parameters_to_context(ist->dec_ctx, stream->codecpar);
             if (err < 0)
-                exit(1);
+                exit_program(1);
 
             if (do_show_log) {
                 // For loging it is needed to disable at least frame threads as otherwise
@@ -2960,7 +2961,7 @@ static int open_input_file(InputFile *ifile, const char *filename,
             if (avcodec_open2(ist->dec_ctx, codec, &opts) < 0) {
                 av_log(NULL, AV_LOG_WARNING, "Could not open codec for input stream %d\n",
                        stream->index);
-                exit(1);
+                exit_program(1);
             }
 
             if ((t = av_dict_get(opts, "", NULL, AV_DICT_IGNORE_SUFFIX))) {
@@ -3738,6 +3739,8 @@ end:
         av_dict_free(&(sections[i].entries_to_show));
 
     avformat_network_deinit();
+
+    printf("FFMPEG_END\n");
 
     return ret < 0;
 }

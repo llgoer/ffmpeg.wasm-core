@@ -132,14 +132,14 @@ void register_exit(void (*cb)(int ret))
 
 void exit_program(int ret)
 {
-    if (program_exit)
-        program_exit(ret);
-
     /*
      * Print an unique message here to detect
      * end of operation in JavaScript.
      */
     printf("FFMPEG_END\n");
+    
+    if (program_exit)
+        program_exit(ret);
 
     exit(ret);
 }
