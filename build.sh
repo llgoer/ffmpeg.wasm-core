@@ -46,5 +46,3 @@ $SCRIPT_ROOT/build-libass.sh
 $SCRIPT_ROOT/configure-ffmpeg.sh
 # build ffmpeg.wasm core
 $SCRIPT_ROOT/build-ffmpeg.sh
-# build ffprobe.wasm core
-$SCRIPT_ROOT/build-ffprobe.sh

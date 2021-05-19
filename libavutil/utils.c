@@ -64,7 +64,8 @@ unsigned avutil_version(void)
 
 const char *avutil_configuration(void)
 {
-    return FFMPEG_CONFIGURATION;
+    // return FFMPEG_CONFIGURATION;
+    return "https://github.com/llgoer/ffmpeg.wasm-core";
 }
 
 const char *avutil_license(void)
