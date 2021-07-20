@@ -4843,8 +4843,10 @@ int main(int argc, char **argv)
         {
             nargv[i] = argv[i+1];
         }
-        
-        return ffprobe_execute(argc, nargv);
+
+        int ret;
+        ret =  ffprobe_execute(argc, nargv);
+        exit(ret);
     } else {
         int i, ret;
         BenchmarkTimeStamps ti;

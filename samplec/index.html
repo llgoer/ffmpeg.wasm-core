@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <script type="text/javascript" src="./hello.js"></script>
+    <script type="text/javascript">
+        const parseArgs = (Core, args) => {
+            const argsPtr = Core._malloc(args.length * Uint32Array.BYTES_PER_ELEMENT);
+            args.forEach((s, idx) => {
+                const buf = Core._malloc(s.length + 1);
+                Core.writeAsciiToMemory(s, buf);
+                Core.setValue(argsPtr + (Uint32Array.BYTES_PER_ELEMENT * idx), buf, 'i32');
+            });
+            return [args.length, argsPtr];
+        };
+
+
+        const myTest = (Core) => {
+            Core.ccall(
+                'proxy_main',
+                'number',
+                ['number', 'number'],
+                parseArgs(Core, ['hello', '-nostdin']),
+            );
+        };
+
+        const runTest = async () => {
+            let resolve = null;
+            const Core = await createTest({
+                printErr: (m) => {
+                    console.log(m);
+                },
+                print: (m) => {
+                    console.log(m);
+                },
+            });
+
+            myTest(Core);
+            await new Promise((_resolve) => { resolve = _resolve });
+            return { Core };
+        };
+
+        const message = document.getElementById('message');
+        runTest();
+    </script>
+
+</head>
+
+<body>
+
+</body>
+
+</html>
